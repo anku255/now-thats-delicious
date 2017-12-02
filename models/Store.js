@@ -20,7 +20,7 @@ const storeSchema = new mongoose.Schema({
   },
   location: {
     type: {
-      String,
+      type: String,
       default: 'Point'
     },
     coordinates: [
