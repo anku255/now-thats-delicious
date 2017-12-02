@@ -6,7 +6,7 @@
   catchErrors(), catch any errors they throw, and pass it along to our express middleware with next()
 */
 
-exports.catchErrors = (fn) => {
+exports.catchErrors = fn => {
   return function(req, res, next) {
     return fn(req, res, next).catch(next);
   };
@@ -37,7 +37,6 @@ exports.flashValidationErrors = (err, req, res, next) => {
   res.redirect('back');
 };
 
-
 /*
   Development Error Hanlder
 
@@ -59,7 +58,6 @@ exports.developmentErrors = (err, req, res, next) => {
     'application/json': () => res.json(errorDetails) // Ajax call, send JSON back
   });
 };
-
 
 /*
   Production Error Handler
