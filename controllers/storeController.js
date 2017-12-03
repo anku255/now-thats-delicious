@@ -1,5 +1,20 @@
 const mongoose = require('mongoose');
 const Store = mongoose.model('Store');
+const multer = require('multer');
+const jimp = require('jimp');
+const uuid = require('uuid');
+
+const multerOptions = {
+  storage: multer.memoryStorage(), // storing temporarily in memory
+  fileFilter(req, file, next) {
+    const isPhoto = file.mimetype.startsWith('image/');
+    if (isPhoto) {
+      next(null, true);
+    } else {
+      next({ message: "That filetype isn't allowed!" }, false);
+    }
+  }
+};
 
 exports.homePage = (req, res) => {
   res.render('index');
@@ -9,9 +24,31 @@ exports.addStore = (req, res) => {
   res.render('editStore', { title: 'Add Store' });
 };
 
+// middleware to upload image and put it in req.file
+exports.upload = multer(multerOptions).single('photo');
+
+exports.resize = async (req, res, next) => {
+  // check if there is no new file to resize (when updating)
+  if (!req.file) {
+    next(); // skip to the next middleware
+    return;
+  }
+  const extension = req.file.mimetype.split('/')[1];
+  req.body.photo = `${uuid.v4()}.${extension}`;
+  // now we resize
+  const photo = await jimp.read(req.file.buffer);
+  await photo.resize(800, jimp.AUTO);
+  await photo.write(`./public/uploads/${req.body.photo}`);
+  // once we have written the photo to our filesystem
+  next();
+};
+
 exports.createStore = async (req, res) => {
   const store = await new Store(req.body).save(); // save new store right away so that 'store' variable contains slug
-  req.flash('success', `Successfully created ${store.name}. Care to leave a review?`);
+  req.flash(
+    'success',
+    `Successfully created ${store.name}. Care to leave a review?`
+  );
   res.redirect(`/store/${store.slug}`);
 };
 
@@ -35,7 +72,12 @@ exports.updateStore = async (req, res) => {
     runValidators: true
   }).exec();
 
-  req.flash('success', `Successfully updated <strong>${store.name}</strong>. <a href="/stores/${store._id}">View Store →</a>`);
+  req.flash(
+    'success',
+    `Successfully updated <strong>${store.name}</strong>. <a href="/stores/${
+      store._id
+    }">View Store →</a>`
+  );
 
   res.redirect(`/stores/${store._id}/edit`);
 };
