@@ -13,7 +13,7 @@ exports.logout = (req, res) => {
   res.redirect('/');
 };
 
-exports.isLoggedIn = (req, res) => {
+exports.isLoggedIn = (req, res, next) => {
   // first check if the user is authenticated
   if (req.isAuthenticated()) {
     next(); // carry on! They are loggen in!
