@@ -170,3 +170,15 @@ exports.heartStore = async (req, res) => {
   );
   res.json(user);
 };
+
+exports.getHearts = async (req, res) => {
+  // Method 1
+  // const user = await User.findOne({ _id: req.user._id }).populate('hearts');
+  // const stores = user.hearts;
+
+  // Method 2
+  const stores = await Store.find({
+    _id: { $in: req.user.hearts }
+  });
+  res.render('stores', { title: 'Hearted Stores', stores });
+};
