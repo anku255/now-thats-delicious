@@ -14,10 +14,10 @@ I have put all of the things that I have learnt (step by step) in a [Trello Proj
 
 ### Where can I see this?
 
-You can visit this website by clicking [here]().
+You can visit this website by clicking [here](https://now-thats-delicious-lxuamlvnbv.now.sh/).
 
 ### How to run this locally?
 
 * Clone this repository.
 * `npm install`
-* `npm start`
+* `npm run dev`
