@@ -1,27 +1,23 @@
-## What is this?
+## Now That's Delicious
 
-Just you wait folks!
+### What is this?
 
-## Sample Data
+This is all of my coursework for [Learn Node](https://learnnode.com) by Wes Bos.
 
-To load sample data, run the following command in your terminal:
+### What did I learn?
 
-```bash
-npm run sample
-```
+* Building an express app with NodeJS.
+* Using Google Maps API
+* Advanced Query in MongoDB
 
-If you have previously loaded in this data, you can wipe your database 100% clean with:
+I have put all of the things that I have learnt (step by step) in a [Trello Project](https://trello.com/b/YLgzP7SZ/learn-node).
 
-```bash
-npm run blowitallaway
-```
+### Where can I see this?
 
-That will populate 16 stores with 3 authors and 41 reviews. The logins for the authors are as follows:
+You can visit this website by clicking [here]().
 
-|Name|Email (login)|Password|
-|---|---|---|
-|Wes Bos|wes@example.com|wes|
-|Debbie Downer|debbie@example.com|debbie|
-|Beau|beau@example.com|beau|
+### How to run this locally?
 
-
+* Clone this repository.
+* `npm install`
+* `npm start`
